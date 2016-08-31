@@ -1,0 +1,284 @@
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+ <title>Hra Kameny</title>
+</head>
+
+<script>
+plocha=new Image(40,40);
+plocha.src="data:image/gif;base64,R0lGODdhKAAoAIACAJGRkdra2iwAAAAAKAAoAAACX4SPqcvtD1GYtNqLs8y86+OF4iaWGGmmE6qabDuCcPrOXW1/Rl7ivOX7UYLCAFF4/CV5y1zT9pxFYdNWVXWlyYo6AJeTdW2/wDF5aD4b0+dwj012x3bqijwUyev3/EUBADs=";
+sipka=new Image(40,40);
+sipka.src="data:image/gif;base64,R0lGODlhKAAoAMIDAAAAAJGRkdra2v///////////////////yH5BAEKAAMALAAAAAAoACgAAANuOLrc/jDKSau9OOvNu/9fAFpBOU6lYJ5PKqgiy7jAu8p08MK4LgC+3S3kA+6OQ07uyExqikGmMPSLSm3U6zXWKXm3Xm52KxvoalLx6EzG/dosdrosb9Lfczfa7taqQWGBTmWEhYaHiImKi4yNiQkAOw==";
+modra=new Image(40,40);
+modra.src="data:image/gif;base64,R0lGODdhKAAoAKEDAAx4tg2h9T+z9P///ywAAAAAKAAoAAACqZSPqcvtDwWI9IFZc7rYhA+G4kiGXCeU6iqeCAur7hHXLffa+uzpNp+6nYZEzgh4LCpxyUvOBND1oE7aTRqkopLY5vZqm4KQ4Jr4Q4Z2hV91ODvGWd1mOFp+DlzW2mecH1eVt/fm5XcHeCdopxdVyHbYmNi4yPXYN/d3GdgWp8GYNvYJisfoI1N6WhOqilrZysIKa5g5S2uwlKtLdLDru4v7K6wkMWw8VAAAOw==";
+var pole=new Array(36);
+var pole1=new Array(36);
+var pole2=new Array(36);
+var bodytahu=new Array(12);
+var pouzitetahy=new Array(12);
+smerx=new initArray(1,1,1,0);
+smery=new initArray(-1,0,1,1);
+hrajeme=0;reaguj=1;kteryjepocitac=2;barvacloveka=1;scoreclovek=0;scorepocitac=0;startnticx=0;startnticy=0;smernticx=0;smernticy=0;
+rt="rotate(-90deg)";z=120;hu="hue-rotate(";h="deg)";h0="0"+h;h1="120"+h;
+
+function initArray(){this.length=initArray.arguments.length;for(var i=0;i<this.length;i++){this[i]=initArray.arguments[i];}}
+
+function NaSipce(kts)
+{
+ if((reaguj==1) && (hrajeme==0))
+ {
+  Reaguj(0);ZvyrazniSipku(kts,3-kteryjepocitac);TahDoPole(kts,3-kteryjepocitac);
+  setTimeout("VykresliTah("+kts+")",700);setTimeout("TestujCtyri("+(3-kteryjepocitac)+")",900);setTimeout("HrajePocitac("+kteryjepocitac+")",1500);
+ }
+}
+
+function HrajePocitac(ktk)
+{
+ if(hrajeme==0)
+ {
+  kterytah=VymysliTah(ktk);TahDoPole(kterytah,ktk);VynulujSipky();ZvyrazniSipku(kterytah,ktk);
+  setTimeout("VykresliTah("+kterytah+")",700);setTimeout("TestujCtyri("+ktk+")",900);setTimeout("Reaguj(1)",1100);setTimeout("VynulujSipky()",1500);
+ }
+}
+
+function Poradit(ktk)
+{
+ if(hrajeme==0){kterytah=VymysliTah(ktk);ZvyrazniSipku(kterytah,ktk);setTimeout("VynulujSipky()",1200);}
+}
+
+function NovaHra()
+{
+ for(var i=0;i<6;i++){for(var j=0;j<6;j++){pole[j+6*i]=0;Zakresli(j,i,0);hrajeme=0;reaguj=1;}}
+ VynulujSipky();
+ document.getElementById("modra").src=modra.src;document.getElementById("fialova").src=modra.src;VymenitBarvy();VymenitBarvy();
+}
+
+function ZacinaPocitac()
+{
+ uznekdohral=0;for(var i=0;i<36;i++){if(pole[i]!=0){uznekdohral+=1;}}
+ if(uznekdohral==0){HrajePocitac(kteryjepocitac);}
+}
+
+function VymenitBarvy()
+{
+ barvacloveka=3-barvacloveka;s1=hu;s2=s1;if(barvacloveka==1){s1+=h0;s2+=h1;}else{s1+=h1;s2+=h0;}
+ Dgsf("modra",s1);Dgsf("fialova",s2);for(i=0;i<6;i++){for(j=0;j<6;j++){Zakresli(j,i,pole[j+6*i]);}}
+}
+
+function Disf(z,s){document.images[z].style.WebkitFilter=s;document.images[z].style.filter=s;}
+function Dgsf(id,s){document.getElementById(id).style.WebkitFilter=s;document.getElementById(id).style.filter=s;}
+
+function Zakresli(a,b)
+{
+ if(pole[a+6*b]==0){document.images[b*7+a].src=plocha.src;}
+ else
+ {
+  document.images[b*7+a].src=modra.src;n1=0;
+  if(barvacloveka==1){n1=z-n1;}
+  if(pole[a+6*b]==2){n1=z-n1;}
+  Disf(b*7+a,hu+n1+h);
+ }
+}
+
+function TestujCtyri(ktk)
+{
+ if(Ntice(3-ktk,4)>0)
+ {
+  if(ktk==barvacloveka){n1=0;}else{n1=z;}
+  hrajeme=3-ktk;
+ }
+ if((Ntice(ktk,4)>0) && (Ntice(3-ktk,4)==0))
+ {
+  if(ktk==3-barvacloveka){n1=0;}else{n1=z;}
+  hrajeme=ktk;
+ }
+ if(hrajeme!=0)
+ {
+  if(hrajeme==kteryjepocitac){scorepocitac+=1;}else{scoreclovek+=1}
+  cs1=Math.floor(scorepocitac/100);cs2=Math.floor((scorepocitac-100*cs1)/10);cs3=scorepocitac-10*cs2-100*cs1;
+  document.getElementById("cisla1").innerHTML=""+cs1+cs2+cs3;
+  cs1=Math.floor(scoreclovek/100);cs2=Math.floor((scoreclovek-100*cs1)/10);cs3=scoreclovek-10*cs2-100*cs1;
+  document.getElementById("cisla2").innerHTML=""+cs1+cs2+cs3;
+  for(var k=0;k<4;k++){s2=hu+(n1+35)+h;Disf(startnticx+k*smernticx+7*(startnticy+k*smernticy),s2);}
+ }
+}
+
+function Reaguj(xx){if(hrajeme==0){reaguj=xx;}}
+
+function Ntice(kterykamen,kolik)
+{
+ celkemntic=0;
+ for(var iy=0;iy<6;iy++)
+ {
+  for(var ix=0;ix<6;ix++)
+  {
+   if(pole[ix+iy*6]==kterykamen)
+   {
+    for(var j=0;j<4;j++)
+    {
+     kk=kolik-1;
+     if((ix+kk*smerx[j]>=0) && (ix+kk*smerx[j]<6) && (iy+kk*smery[j]>=0) && (iy+kk*smery[j]<6))
+     {
+      jetam=1;
+      for(var k=1;k<kolik;k++){if(pole[(ix+k*smerx[j])+6*(iy+k*smery[j])]!=kterykamen){jetam=0;}}
+      if(jetam==1){celkemntic+=1;startnticx=ix;startnticy=iy;smernticx=smerx[j];smernticy=smery[j];}
+ }}}}}
+ return celkemntic;
+}
+
+function ObodujPole(km)
+{
+ b=0;b+=10*Ntice(km,2)-30*Ntice(3-km,2);
+ b+=200*Ntice(km,3)-400*Ntice(3-km,3);
+ b+=4000*Ntice(km,4)-8000*Ntice(3-km,4);return b;
+}
+
+function TahDoPole(tah,ktk)
+{
+ if(tah<6)
+ {
+  ix=tah;for(var iy=0;iy<5;iy++){pole[ix+iy*6]=pole[ix+6*(iy+1)];}
+  pole[ix+30]=ktk;
+ }
+ else
+ {
+  iy=tah-6;for(var ix=0;ix<5;ix++){pole[ix+6*iy]=pole[ix+1+6*iy];}
+  pole[5+6*iy]=ktk;
+ }
+}
+
+function NakresliPlochu()
+{
+  for(var i=0;i<36;i++){pole[i]=0;}
+  s="";s1=" src='' border=0 onClick='NaSipce(";
+  for(var iy=0;iy<6;iy++)
+  {
+   tahiy=iy+6;
+   for(var ix=0;ix<6;ix++){s+="<img src='' border=0>";}
+   s+="<img style='transform:"+rt+"' "+s1;s+=tahiy;s+=")'><br>\n";
+  }
+  for(var ix=0;ix<6;ix++){s+="<img"+s1;s+=ix;s+=")'>";}
+  document.write(s);
+}
+
+function VykresliTah(kterytah)
+{
+  if(kterytah<6){ix=kterytah;for(var iy=0;iy<6;iy++){Zakresli(ix,iy);}}
+  else{iy=kterytah-6;for(var ix=0;ix<6;ix++){Zakresli(ix,iy);}}
+}
+
+function ZvyrazniSipku(kterytah,kterykamen)
+{
+ if(kterytah<6){x2=42+kterytah;}else{x2=6+(kterytah-6)*7;document.images[x2].style.transform=rt;}
+ Disf(x2,"invert(100%)");
+}
+
+function VynulujSipky()
+{
+ s="invert(0%)";
+ for(var i=0;i<6;i++)
+ {
+  document.images[42+i].src=sipka.src;document.images[i*7+6].src=sipka.src;
+  document.images[i*7+6].style.transform=rt;
+  Disf(i*7+6,s);Disf(42+i,s);
+ }
+}
+
+function VymysliTah(kterykamen)
+{
+ for(var i=0;i<36;i++){pole1[i]=pole[i];}
+ max=-100000;maxindex=-1;minule=ObodujPole(kterykamen);
+ for(var i=0;i<12;i++)
+ {
+  if(i<6){zaklad=i;}else{zaklad=i-6;}
+  TahDoPole(i,kterykamen);
+  bodytahu[i]=ObodujPole(kterykamen)-minule+Math.floor(zaklad/2)+Math.floor(100*Math.random(1))/100;
+  if(max<bodytahu[i]){max=bodytahu[i];maxindex=i;}
+  for(var j=0;j<36;j++){pole[j]=pole1[j];}
+ }
+ puvodnindex=maxindex;
+ for(var j=0;j<12;j++){pouzitetahy[j]=0;}
+ for(var j=0;j<36;j++){pole2[j]=pole1[j];}
+ for(var j=0;j<36;j++){pole[j]=pole2[j];}
+ TahDoPole(maxindex,kterykamen);
+ if (Ntice(kterykamen,4)==0)
+ {
+  do
+  {
+   for(var j=0;j<36;j++){pole[j]=pole2[j];}
+   TahDoPole(maxindex,kterykamen);pouzitetahy[maxindex]=1;
+   for(var j=0;j<36;j++){pole1[j]=pole[j];}
+   ctverice=0;
+   for(var i=0;i<12;i++)
+   {
+    TahDoPole(i,3-kterykamen);
+    if(Ntice(3-kterykamen,4)>0){ctverice=1;}
+    for(var j=0;j<36;j++){pole[j]=pole1[j];}
+   }
+   if(ctverice==1)
+   {
+    novyindex=12;maximum=-100000;
+    for(var i=0;i<12;i++){if((pouzitetahy[i]==0) && (maximum<=bodytahu[i])){novyindex=i;maximum=bodytahu[i];}}
+    if(novyindex!=12){maxindex=novyindex;pouzitetahy[novyindex]=1;}
+    else{maxindex=puvodnindex;ctverice=0;}
+   }
+  }
+  while(ctverice==1)
+ }
+ for(var j=0;j<36;j++){pole[j]=pole2[j];}
+ return(maxindex);
+}
+</script>
+
+<body>
+
+<style>
+p{font:bold 22px courier;display:inline}
+h1{display:inline;font:bold 40px courier;position:relative;bottom:7px}
+p.ha{position:relative;bottom:13px;left:-25px}
+p.hc{position:relative;bottom:13px;left:135px}
+p.pt1{display:inline-block;font:italic 14px times}
+p.pt2{font:bold italic 14px arial}
+p.pt3{display:inline-block;font:bold italic 12px arial}
+table{width:635px;margin-left:auto;margin-right:auto;background-color:#ffff57;padding:8px;border:2px solid black}
+td{width:299px;vertical-align:top;padding:5px}
+td.ph{background-color:black;width:2px;padding:0px}
+td.pl{width:280px;padding:17px;}
+button{width:200px;height:25px;background-color:#ffffff;border-radius:6px;border:2px solid #000;margin-top:11px;font:bold 16px arial}
+button:hover{background-color:#cccccc}
+canvas{float:right;position:relative;bottom:27px;left:27px}
+</style>
+
+<table>
+<tr><td>
+<script>NakresliPlochu();</script>
+<p class="pt3">Umělá inteligence na 3 řádky kódu!</p></td>
+<td class="ph"></td>
+<td class="pl"><h1>kameny</h1><canvas id="rb" width=70 height=70></canvas><br>
+<p><img id="modra" src="" border=0></p><p class="hc" id="cisla1">000</p><p class="ha">počítač</p><br>
+<p><img id="fialova" src="" border=0></p><p class="hc" id="cisla2">000</p><p class="ha">člověk</p><br>
+<button onclick="VymenitBarvy()">Vyměnit barvy</button><br><button onclick="ZacinaPocitac()">Začíná počítač</button><br>
+<button onclick="Poradit(1)">Poradit tah</button><br><button onclick="NovaHra()">Nová hra</button>
+</td></tr>
+<tr><td colspan=3 style="padding:0px"><p class="pt1">Cílem hry je sestavit na hracím poli
+čtyři kameny v řadě - svisle, vodorovně nebo diagonálně. Kameny se na plochu
+ukládají zasunutím zprava nebo zespodu. Kliknutím na šipku zasunete kámen a
+zároveň posunete celý sloupec na hrací ploše. Jestliže svým tahem vytvoříte
+současně čtveřici sobě i počítači, prohrajete.</p>
+<p class="pt2">Remake hry Think! ( od Ariolasoft '85 ) s novou vlastní umělou inteligencí.</p>
+<p class="pt3">&copy;2002,2016 Pavel Chalupa ( pavel@kregion.cz ), 10kB verze /4kB gzip/</p>
+</td></tr>
+</table>
+
+<script>
+rb=document.getElementById("rb");cx=rb.getContext("2d");
+for(j=0;j<4;j++)
+{
+ if(j>1){r1=0;}else{r1=252;};if(j>0){r2=252;}else{r2=0;};r3=252*Math.floor(j/3);cx.fillStyle = "rgb("+r1+","+r2+","+r3+")";
+ cx.beginPath();cx.moveTo(7*j,0);cx.lineTo(70,70-7*j);cx.lineTo(70,63-7*j);cx.lineTo(7+7*j,0);cx.lineTo(7*j,0);cx.fill();
+}
+NovaHra();
+</script>
+
+</body>
+</html>
