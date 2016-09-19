@@ -27,7 +27,7 @@
  ?>
  <link rel="stylesheet" type="text/css" href="kameny.css">
  <script src="kameny.js"></script>
- <title>Hra Kameny</title>
+ <title>Kameny Game</title>
 </head>
 <body>
 <div id="main">
