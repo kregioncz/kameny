@@ -5,9 +5,8 @@ Author: http://www.root.cz/autori/pavel-chalupa/
 # http://kregion.cz/kameny-en/
 
 http://kregion.cz/kameny/  (running czech version)
-
-
-
+.
+.
  old javascript-only versions (everything is in one HTML file):
 # http://kregion.cz/kameny/kameny-10kb-en.html
 http://kregion.cz/kameny/kameny-10kb-cz.html
