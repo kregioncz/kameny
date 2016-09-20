@@ -1,7 +1,7 @@
 # Kameny Game with AI
 Author: http://www.root.cz/autori/pavel-chalupa/
 
-...for the 10kb contest... (running copy of 'kameny-en' dir - look at 'doc-10kb.txt')
+...for the 10kb contest... look at 'doc-10kb.txt'
 # http://kregion.cz/kameny-en/
 
 http://kregion.cz/kameny/  (running czech version)
